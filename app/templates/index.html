@@ -2,7 +2,13 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block page_content %}
-    <form action="" method="post">
-        {{wtf.quick_form(form)}}
-    </form>
+<h1>Dashboard</h1>
+<p>
+    Hello, dear
+    {% if current_user.is_authenticated %}
+        {{ current_user.username }} 
+    {% else %}
+       Stranger 
+    {% endif %}!
+</p>
 {% endblock page_content %}
