@@ -43,7 +43,7 @@ class RegistrationForm(FlaskForm):
     def validate_national_id(self, field):
         if Employee.query.filter_by(national_id=field.data).first():
             raise ValidationError('National ID is already registered.')
-    
+
     def validate_personel_id(self, field):
         if Employee.query.filter_by(national_id=field.data).first():
             raise ValidationError('Personel ID is already registered.')

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Statistics</h1>
+</div>
+
+<div class="table-responsive text-nowrap">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <th>Married Employees</th>
+            <th>Single Employees</th>
+            <th>More than Million Income</th>
+            <th>Income Sum</th>
+            <th>Income STDEV</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{stats.married}}</td>
+                <td>{{stats.single}}</td>
+                <td>{{stats.million_income}}</td>
+                <td>{{stats.income_sum}}</td>
+                <td>{{stats.stdev}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive text-nowrap">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <th></th>
+            <th>Personel ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Income</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="bg-light">Maximum Income Employee</td>
+                <td>{{stats.max_income_user.personel_id}}</td>
+                <td>{{stats.max_income_user.first_name}}</td>
+                <td>{{stats.max_income_user.last_name}}</td>
+                <td>{{stats.max_income_user.income}}</td>
+            </tr>
+            <tr>
+                <td class="bg-light">Minimum Income Employee</td>
+                <td>{{stats.min_income_user.personel_id}}</td>
+                <td>{{stats.min_income_user.first_name}}</td>
+                <td>{{stats.min_income_user.last_name}}</td>
+                <td>{{stats.min_income_user.income}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock page_content %}

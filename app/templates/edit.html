@@ -1,26 +1,26 @@
 {% extends 'base.html' %}
 
 {% block page_content %}
-  <div class="page-header">
+<div class="page-header">
     <h1>Edit Employee</h1>
-  </div>
+</div>
 {% from "_formhelper.html" import render_field%}
 <div class="col-md-4">
 
- <form action="" method="post" class="form" role="form">
-  {{ form.csrf_token() }}
- <d1>
-  {{ render_field(form.personel_id) }}
-  {{ render_field(form.first_name) }}
-  {{ render_field(form.last_name) }}
-  {{ render_field(form.national_id) }}
-  {{ render_field(form.phone_number) }}
-  {{ render_field(form.address) }}
-  {{ render_field(form.age) }}
-  {{ render_field(form.income) }}
-  {{ render_field(form.married,with_label=False ) }}
- </d1>
- <p><input type=submit class='btn btn-primary'>
-</form> 
+    <form action="" method="post" class="form" role="form">
+        {{ form.csrf_token() }}
+        <d1>
+            {{ render_field(form.personel_id) }}
+            {{ render_field(form.first_name) }}
+            {{ render_field(form.last_name) }}
+            {{ render_field(form.national_id) }}
+            {{ render_field(form.phone_number) }}
+            {{ render_field(form.address) }}
+            {{ render_field(form.age) }}
+            {{ render_field(form.income) }}
+            {{ render_field(form.married,with_label=False ) }}
+        </d1>
+        <p><input type=submit class='btn btn-primary'>
+    </form>
 </div>
 {% endblock page_content %}

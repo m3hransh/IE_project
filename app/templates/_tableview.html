@@ -1,12 +1,10 @@
 {% macro render_table(rows, headers, key_map) %}
 <div class="table-responsive text-nowrap">
-
 <table id="datatable" class="table table-striped table-bordered">
     <thead class="thead-dark">
     <tr>
-
     {% for header in headers %}
-        <th>{{ key_map[header] }}</th>
+        <th>{{ key_map[header]}}</th>
     {% endfor %}
     </tr>
     </thead>
@@ -19,7 +17,6 @@
         </tr>    
     {% endfor %}
     </tbody>
-
 </table>
 </div>
 {% endmacro %}

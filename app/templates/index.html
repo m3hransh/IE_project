@@ -2,8 +2,6 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 {% from '_tableview.html' import render_table %}
 {% block page_content %}
-
-
     <div class="row page-header">
         <h1>Employees</h1>
     </div>
@@ -24,5 +22,4 @@
                         'age': 'Age',
                         'income': 'Income'}%}
     {{render_table(employees, table_key, key_map)}}
-
 {% endblock page_content %}
