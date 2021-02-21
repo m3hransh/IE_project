@@ -113,9 +113,12 @@ def stats():
     stats['married'] = len([e for e in emps if e.married == True])
     stats['single'] = len(emps) - stats['married']
     stats['million_income'] = len([e for e in emps if e.income > 1000000])
-    stats['max_income_user'] = max(emps, key=lambda x: x.income)
-    stats['min_income_user'] = min(emps, key=lambda x: x.income)
-    stats['income_sum'] = sum([e.income for e in emps])
-    stats['stdev'] = statistics.stdev([e.income for e in emps])
-
+    if len(emps) >0:
+        stats['max_income_user'] = max(emps, key=lambda x: x.income)
+        stats['min_income_user'] = min(emps, key=lambda x: x.income)
+        stats['income_sum'] = sum([e.income for e in emps])
+    try:
+        stats['stdev'] = statistics.stdev([e.income for e in emps])
+    except statistics.StatisticsError:
+        stats['stdev'] = 0
     return render_template('stats.html', stats=stats)

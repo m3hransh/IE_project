@@ -19,12 +19,14 @@
                 <td>{{stats.married}}</td>
                 <td>{{stats.single}}</td>
                 <td>{{stats.million_income}}</td>
-                <td>{{stats.income_sum}}</td>
+                <td>{{stats.get('income_sum')}}</td>
                 <td>{{stats.stdev}}</td>
             </tr>
         </tbody>
     </table>
 </div>
+{% if stats.get('max_income_user') %}
+    
 <div class="table-responsive text-nowrap">
     <table class="table table-bordered">
         <thead class="thead-dark">
@@ -52,5 +54,6 @@
         </tbody>
     </table>
 </div>
+{% endif %}
 
 {% endblock page_content %}
