@@ -6,6 +6,10 @@ from ..models import Employee
 
 
 class RegistrationForm(FlaskForm):
+    personel_id = StringField('Personel ID', validators=[
+        DataRequired(),
+        Regexp(r'^\d+$', 0, 'This should be 10 digits')
+    ])
     first_name = StringField('First Name', validators=[
         DataRequired(),
         Length(1, 64),
@@ -40,6 +44,10 @@ class RegistrationForm(FlaskForm):
         if Employee.query.filter_by(national_id=field.data).first():
             raise ValidationError('National ID is already registered.')
     
+    def validate_personel_id(self, field):
+        if Employee.query.filter_by(national_id=field.data).first():
+            raise ValidationError('Personel ID is already registered.')
+
     def validate_phone_number(self, field):
         if Employee.query.filter_by(phone_number=field.data).first():
             raise ValidationError('Phone number is already registered.')

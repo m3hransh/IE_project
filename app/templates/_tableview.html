@@ -1,0 +1,26 @@
+{% macro render_table(rows, headers) %}
+
+<table id="datatable" class="table table-striped table-bordered">
+    <thead>
+    <tr>
+
+    {% for header in headers %}
+        <th>{{ header }}</th>
+    {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for n in range(100) %}
+    {% for row in rows %}
+        <tr>
+            {% for head in headers %}
+                <td>{{ row| attr(head) }}</td>
+            {% endfor %}
+        </tr>    
+    {% endfor %}
+    {% endfor %}
+    </tbody>
+
+</table>
+    
+{% endmacro %}

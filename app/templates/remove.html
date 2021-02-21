@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+  <div class="page-header">
+    <h1>Remove Employee</h1>
+  </div>
+{% from "_formhelper.html" import render_field%}
+<div class="col-md-4">
+
+ <form action="" method="post" class="form" role="form">
+  {{ form.csrf_token() }}
+ <d1>
+  {{ render_field(form.personel_id) }}
+ </d1>
+ <p><input class="btn btn-otuline-secondary" type="reset" value="Reset">
+ <input type=submit class='btn btn-outline-primary'>
+</form> 
+</div>
+{% endblock page_content %}

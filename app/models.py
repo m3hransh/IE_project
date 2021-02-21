@@ -10,6 +10,7 @@ def load_user(user_id):
 class Employee(db.Model):
     __tablename__ = 'employees'
     id = db.Column(db.Integer, primary_key=True)
+    personel_id = db.Column(db.String(64), unique=True)
     first_name = db.Column(db.String(64))
     last_name = db.Column(db.String(64))
     national_id = db.Column(db.String(64), unique=True)
