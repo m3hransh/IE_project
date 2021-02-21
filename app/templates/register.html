@@ -2,13 +2,25 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block page_content %}
-<h1>Dashboard</h1>
-<p>
-    Hello, dear
-    {% if current_user.is_authenticated %}
-        {{ current_user.username }} 
-    {% else %}
-       Stranger 
-    {% endif %}!
-</p>
+  <div class="page-header">
+    <h1>Register Employee</h1>
+  </div>
+{% from "_formhelper.html" import render_field%}
+<div class="col-md-4">
+
+ <form action="" method="post" class="form" role="form">
+  {{ form.csrf_token() }}
+ <d1>
+  {{ render_field(form.first_name) }}
+  {{ render_field(form.last_name) }}
+  {{ render_field(form.national_id) }}
+  {{ render_field(form.phone_number) }}
+  {{ render_field(form.address) }}
+  {{ render_field(form.age) }}
+  {{ render_field(form.income) }}
+  {{ render_field(form.married,with_label=False ) }}
+ </d1>
+ <p><input type=submit class='btn btn-primary'>
+</form> 
+</div>
 {% endblock page_content %}
