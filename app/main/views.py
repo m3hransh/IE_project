@@ -10,7 +10,8 @@ from flask_login import login_required
 @main.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    return render_template('index.html')
+    employees = Employee.query.all()
+    return render_template('index.html', employees=employees)
 
 @main.route('/register', methods=['GET', 'POST'])
 @login_required

@@ -1,16 +1,28 @@
 {% extends 'base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
-
+{% from '_tableview.html' import render_table %}
 {% block page_content %}
-    <div class="page-header">
-<h1>Employees</h1>
+
+
+    <div class="row page-header">
+        <h1>Employees</h1>
     </div>
-<p>
-    Hello, dear
-    {% if current_user.is_authenticated %}
-        {{ current_user.username }} 
-    {% else %}
-       Stranger 
-    {% endif %}!
-</p>
+    {% set table_key = ['personel_id',
+                        'first_name',
+                        'last_name',
+                        'national_id',
+                        'phone_number',
+                        'address',
+                        'age',
+                        'income']%}
+    {% set key_map = {'personel_id':'Personal ID',
+                        'first_name':'First Name',
+                        'last_name':'Last Name',
+                        'national_id':'National ID',
+                        'phone_number':'Phone Number',
+                        'address': 'Adress',
+                        'age': 'Age',
+                        'income': 'Income'}%}
+    {{render_table(employees, table_key, key_map)}}
+
 {% endblock page_content %}
