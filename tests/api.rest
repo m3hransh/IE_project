@@ -1,0 +1,6 @@
+GET http://127.0.0.1:5000/api/myget/Ali
+
+###
+PUT http://127.0.0.1:5000/api/myupdate/3/1000000
+###
+DELETE http://127.0.0.1:5000/api/mydel/female
