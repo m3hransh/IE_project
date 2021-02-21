@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% from "_formhelper.html" import render_field%}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block page_content %}
     <div class="col-md-4">
     <h1>Register Employee</h1>
@@ -15,6 +16,7 @@
           {{ render_field(form.age) }}
           {{ render_field(form.income) }}
           {{ render_field(form.married,with_label=False ) }}
+          {{ wtf.form_field(form.gender) }}
         </d1>
         <p><input type=submit class='btn btn-primary'>
       </form>

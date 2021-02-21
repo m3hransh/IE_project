@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import render_template, session, redirect, url_for, flash
+from flask import render_template, session, redirect, url_for, flash, request
 from . import main
 from .. import db
 from ..models import Employee
@@ -19,8 +19,9 @@ def index():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        gender = {'Male':True, 'Female':False}
         employee = Employee(
-            personel_id=form.personel_id,
+            personel_id=form.personel_id.data,
             first_name=form.first_name.data,
             last_name=form.last_name.data,
             national_id=form.national_id.data,
@@ -28,7 +29,8 @@ def register():
             address=form.address.data,
             married=form.married.data,
             age=form.age.data,
-            income=form.income.data
+            income=form.income.data,
+            gender=gender[form.gender.data]
         )
         db.session.add(employee)
         db.session.commit()
@@ -41,12 +43,28 @@ def register():
 @login_required
 def edit():
     form = RegistrationForm()
-    if form.personel_id.data:
+    user_id = request.args.get('user_id')
+    if user_id and request.method == 'GET':
+        emp = Employee.query.filter_by(personel_id=user_id).first()
+        if emp:
+            form.personel_id.data = emp.personel_id
+            form.first_name.data = emp.first_name
+            form.last_name.data = emp.last_name
+            form.national_id.data = emp.national_id
+            form.phone_number.data = emp.phone_number
+            form.address.data = emp.address
+            form.married.data = emp.married
+            form.age.data = emp.age
+            form.income.data = emp.income
+            form.gender.data = str(emp.gender)
+    
+    if form.personel_id.data and request.method == 'POST':
         employee =\
             Employee.query.filter_by(
                 personel_id=form.personel_id.data
             ).first()
         if employee and form.validate_on_submit():
+            gender = {'Male':True, 'Female':False}
             employee.first_name = form.first_name.data
             employee.last_name = form.last_name.data
             employee.national_id = form.national_id.data
@@ -55,6 +73,8 @@ def edit():
             employee.married = form.married.data
             employee.age = form.age.data
             employee.income = form.income.data
+            employee.gender = gender[form.gender.data]
+            
 
             db.session.add(employee)
             db.session.commit()

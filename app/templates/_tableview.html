@@ -10,7 +10,7 @@
     </thead>
     <tbody>
     {% for row in rows %}
-        <tr>
+        <tr data-id="{{ row.personel_id}}">
             {% for head in headers %}
                 <td>{{ row| attr(head) }}</td>
             {% endfor %}

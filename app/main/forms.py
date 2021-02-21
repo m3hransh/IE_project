@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, RadioField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 from ..models import Employee
@@ -35,19 +35,23 @@ class RegistrationForm(FlaskForm):
     ])
     income = StringField('Income', validators=[
         DataRequired(),
-        Regexp('^\d+$')
+        Regexp('^\d+$', 0, 'Should be a number')
     ])
     married = BooleanField('Married')
+    gender = RadioField('Gender', choices=[('Male', 'Male'), ('Female', 'Female')])
     submit = SubmitField('Submit')
 
     def validate_national_id(self, field):
-        if Employee.query.filter_by(national_id=field.data).first():
+        emp = Employee.query.filter_by(national_id=field.data).first()
+        if emp and emp.personel_id != self.personel_id.data:
             raise ValidationError('National ID is already registered.')
 
     def validate_personel_id(self, field):
-        if Employee.query.filter_by(national_id=field.data).first():
+        emp = Employee.query.filter_by(national_id=field.data).first()
+        if emp and emp.personel_id != self.personel_id.data:
             raise ValidationError('Personel ID is already registered.')
 
     def validate_phone_number(self, field):
-        if Employee.query.filter_by(phone_number=field.data).first():
+        emp = Employee.query.filter_by(phone_number=field.data).first()
+        if emp and emp.personel_id != self.personel_id.data:
             raise ValidationError('Phone number is already registered.')

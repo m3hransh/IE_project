@@ -21,10 +21,26 @@ class Employee(db.Model):
     married = db.Column(db.Boolean)
     age = db.Column(db.Integer)
     income = db.Column(db.Integer)
+    gender = db.Column(db.Boolean)
 
     def __repr__(self):
         return '<Employee %r>' % (self.first_name + self.last_name)
 
+    def to_json(self):
+        gender= ['Female', 'Male']
+        json_emp = {
+            'personel_id':self.personel_id,
+            'first_name':self.first_name,
+            'last_name':self.last_name,
+            'national_id':self.national_id,
+            'phone_number':self.phone_number,
+            'address':self.address,
+            'married':self.married,
+            'age':self.age,
+            'income':self.income,
+            'gender':gender[self.gender]
+        }
+        return json_emp
 
 class Role(db.Model):
     __tablename__ = 'roles'
