@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% from '_tableview.html' import render_table %}
+{% from "_formhelper.html" import render_field%}
+{% block style %}
+
+tr[data-id]{
+cursor:pointer;
+}
+{% endblock style %}
+{% set table_key = ['personel_id',
+'first_name',
+'last_name',
+'national_id',
+'phone_number',
+'address',
+'age',
+'income',
+'gender']%}
+{% set key_map = {'personel_id':'Personal ID',
+'first_name':'First Name',
+'last_name':'Last Name',
+'national_id':'National ID',
+'phone_number':'Phone Number',
+'address': 'Adress',
+'age': 'Age',
+'income': 'Income',
+'gender': 'Male'}%}
+{% block page_content %}
+<div class="page-header">
+<h1>Report</h1>
+</div>
+<form action="" method="post" class="form" role="form">
+    {{ form.csrf_token() }}
+    <d1>
+        <div class="col-md-4">
+            {{ render_field(form.last_name) }}
+            {{ render_field(form.age) }}
+            {{ wtf.form_field(form.married) }}
+        </div>
+    </d1>
+    <p><input type=submit class='btn btn-primary'>
+</form>
+{{render_table(employees, table_key, key_map)}}
+{% endblock page_content %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const rows = document.querySelectorAll("tr[data-id]");
+        console.log(rows);
+        rows.forEach(row => {
+            row.addEventListener('click', () => {
+                window.location.href = `/edit?user_id=${row.dataset.id}`;
+                console.log(rows);
+            });
+        })
+    })
+</script>
+
+{% endblock scripts %}

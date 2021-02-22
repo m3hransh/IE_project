@@ -3,15 +3,40 @@ from flask import render_template, session, redirect, url_for, flash, request
 from . import main
 from .. import db
 from ..models import Employee
-from .forms import RegistrationForm
+from .forms import RegistrationForm, ReportForm
 from flask_login import login_required
 
 
-@main.route('/', methods=['GET', 'POST'])
+@main.route('/')
 @login_required
 def index():
     employees = Employee.query.all()
     return render_template('index.html', employees=employees)
+
+
+@main.route('/report', methods=['GET', 'POST'])
+@login_required
+def report():
+    form = ReportForm()
+    employees = Employee.query
+    if request.method == 'POST' and form.validate_on_submit():
+        if form.last_name.data:
+            employees =\
+                employees.filter_by(last_name=form.last_name.data)
+        if form.age.data:
+            employees =\
+                employees.filter_by(age=form.age.data)
+        print(form.married.data)
+        if len(form.married.data) == 1:
+            if 'male' in form.married.data:
+                employees =\
+                    employees.filter_by(gender=True)
+            else:
+                employees =\
+                    employees.filter_by(gender=False)
+
+
+    return render_template('report.html', employees=employees.all(), form=form)
 
 
 @main.route('/register', methods=['GET', 'POST'])
@@ -19,7 +44,7 @@ def index():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        gender = {'Male':True, 'Female':False}
+        gender = {'Male': True, 'Female': False}
         employee = Employee(
             personel_id=form.personel_id.data,
             first_name=form.first_name.data,
@@ -57,14 +82,14 @@ def edit():
             form.age.data = emp.age
             form.income.data = emp.income
             form.gender.data = str(emp.gender)
-    
+
     if form.personel_id.data and request.method == 'POST':
         employee =\
             Employee.query.filter_by(
                 personel_id=form.personel_id.data
             ).first()
         if employee and form.validate_on_submit():
-            gender = {'Male':True, 'Female':False}
+            gender = {'Male': True, 'Female': False}
             employee.first_name = form.first_name.data
             employee.last_name = form.last_name.data
             employee.national_id = form.national_id.data
@@ -74,7 +99,6 @@ def edit():
             employee.age = form.age.data
             employee.income = form.income.data
             employee.gender = gender[form.gender.data]
-            
 
             db.session.add(employee)
             db.session.commit()
@@ -107,13 +131,13 @@ def remove():
 @main.route('/stats', methods=['GET', 'POST'])
 @login_required
 def stats():
-    import statistics 
+    import statistics
     emps = Employee.query.all()
     stats = {}
     stats['married'] = len([e for e in emps if e.married == True])
     stats['single'] = len(emps) - stats['married']
     stats['million_income'] = len([e for e in emps if e.income > 1000000])
-    if len(emps) >0:
+    if len(emps) > 0:
         stats['max_income_user'] = max(emps, key=lambda x: x.income)
         stats['min_income_user'] = min(emps, key=lambda x: x.income)
         stats['income_sum'] = sum([e.income for e in emps])

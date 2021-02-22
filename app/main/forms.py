@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, RadioField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, RadioField, SelectMultipleField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 from ..models import Employee
@@ -30,8 +30,8 @@ class RegistrationForm(FlaskForm):
     address = StringField('Address', validators=[DataRequired()])
     age = StringField('Age', validators=[
         DataRequired(),
-        Regexp(r'^\d{1,3}$', 0, Regexp(
-            'Age should be valid number'))
+        Regexp(r'^\d{1,3}$', 0, 
+            'Age should be valid number')
     ])
     income = StringField('Income', validators=[
         DataRequired(),
@@ -55,3 +55,14 @@ class RegistrationForm(FlaskForm):
         emp = Employee.query.filter_by(phone_number=field.data).first()
         if emp and emp.personel_id != self.personel_id.data:
             raise ValidationError('Phone number is already registered.')
+
+class ReportForm(FlaskForm):
+    last_name = StringField('Last Name', validators=[
+        Length(0, 64),
+        Regexp(r'^[A-za-z]*$', 0, 'First Name must have only letters')])
+    
+    age = StringField('Age', validators=[
+        Regexp(r'^\d{0,3}$', 0, 'Age should be valid number')
+    ])
+    married = SelectMultipleField(u'Gender',
+        choices=[('male', 'Male'), ('female', 'Female')])
